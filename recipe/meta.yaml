@@ -32,8 +32,6 @@ test:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
   commands:
-    # Workaround for lack of CONDA_BUILD_SYSROOT variable in staged recipes
-    - export CONDA_BUILD_SYSROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk  # [osx]
     - cd source/examples
     # example_UsingIterators
     - ${CXX} example_UsingIterators.cc -o example_UsingIterators -I${CONDA_PREFIX}/include -L${CONDA_PREFIX}/lib -lHepMC
