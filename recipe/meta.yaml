@@ -1,5 +1,5 @@
 {% set name = "hepmc2" %}
-{% set version = "2.06.11" %}
+{% set version = "3.0.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,11 +7,11 @@ package:
 
 source:
   url: https://hepmc.web.cern.ch/hepmc/releases/hepmc{{ version }}.tgz
-  sha256: a328304b4d5077244aa583a64536fd04f6d4e2161f909eebc33b71048d481a0b
+  sha256: 3d0ece060d1c608f62fde053945a6418d057ec2f1dbe5ed6ddf8e74fc9aeef47
   folder: source
 build:
   number: 0
-  skip: True  # [win]
+  skip: true  # [win]
 
 requirements:
   build:
@@ -41,16 +41,16 @@ about:
   license: LGPL-2.1
   license_family: LGPL
   license_file: source/INSTALL
-  summary: 'HepMC - a C++ Event Record for Monte Carlo Generators'
+  summary: HepMC - a C++ Event Record for Monte Carlo Generators
 
   description: |
-           The HepMC package is an object oriented, C++ event record
-           for High Energy Physics Monte Carlo generators and simulation.
-           The original code was written by M. Dobbs and J.B. Hansen
-            (Comput. Phys. Commun. 134 (2001) 41). Since the first 
-           implementation, the package has undergone several modifications
-           and in particular, the latest HepMC3 series is a completely new
-           re-write using currently available C++11 techniques. 
+    The HepMC package is an object oriented, C++ event record
+    for High Energy Physics Monte Carlo generators and simulation.
+    The original code was written by M. Dobbs and J.B. Hansen
+     (Comput. Phys. Commun. 134 (2001) 41). Since the first 
+    implementation, the package has undergone several modifications
+    and in particular, the latest HepMC3 series is a completely new
+    re-write using currently available C++11 techniques. 
 
 extra:
   recipe-maintainers:
