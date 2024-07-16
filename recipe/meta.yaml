@@ -26,7 +26,8 @@ requirements:
     - cython
     - setuptools
     - pip
-    - yaml
+  run:
+    - python
 
 
 test:
@@ -36,6 +37,7 @@ test:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - pip
+    - python
   commands:
     # Workaround for lack of CONDA_BUILD_SYSROOT variable in staged recipes
     - cd source/examples
