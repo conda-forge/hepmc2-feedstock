@@ -44,6 +44,7 @@ test:
     - ${CXX} example_EventSelection.cc -o example_EventSelection -I${CONDA_PREFIX}/include -L${CONDA_PREFIX}/lib -lHepMC
     # example_BuildEventFromScratch
     - ${CXX} example_BuildEventFromScratch.cc -o example_BuildEventFromScratch -I${CONDA_PREFIX}/include -L${CONDA_PREFIX}/lib -lHepMC
+    - python -c "import sys; print(f'Python {sys.version} is working.')"
 
 about:
   home: http://hepmc.web.cern.ch/hepmc/
