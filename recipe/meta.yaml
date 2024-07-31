@@ -10,7 +10,7 @@ source:
   sha256: 86b66ea0278f803cde5774de8bd187dd42c870367f1cbf6cdaec8dc7cf6afc10
   folder: source
 build:
-  number: 1
+  number: 2
   skip: True  # [win]
 
 requirements:
@@ -21,12 +21,8 @@ requirements:
     - cmake
     - make
     - python
-    - cython
   host:
     - python
-    - cython
-    - setuptools
-    - pip
   run:
     - python
 
@@ -38,7 +34,6 @@ test:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - {{ stdlib("c") }}
-    - pip
     - python
   commands:
     # Workaround for lack of CONDA_BUILD_SYSROOT variable in staged recipes
@@ -49,8 +44,6 @@ test:
     - ${CXX} example_EventSelection.cc -o example_EventSelection -I${CONDA_PREFIX}/include -L${CONDA_PREFIX}/lib -lHepMC
     # example_BuildEventFromScratch
     - ${CXX} example_BuildEventFromScratch.cc -o example_BuildEventFromScratch -I${CONDA_PREFIX}/include -L${CONDA_PREFIX}/lib -lHepMC
-    # temporarily skipping pip check on win and pypy build because of bizarre tqdm issue
-    - pip check  # [not (win and python_impl == 'pypy')]
 
 about:
   home: http://hepmc.web.cern.ch/hepmc/
