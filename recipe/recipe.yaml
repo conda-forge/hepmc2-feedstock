@@ -13,7 +13,7 @@ source:
   sha256: 86b66ea0278f803cde5774de8bd187dd42c870367f1cbf6cdaec8dc7cf6afc10
   target_directory: source
   patches:
-    - 0001-Fix-cmake-minimum-version.patch
+    - 0001-Fix-cmake4-compat.patch
 
 build:
   number: 4
