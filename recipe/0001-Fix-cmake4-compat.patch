@@ -46,24 +46,41 @@ index bd8b713..475310b 100644
    STRING(REGEX REPLACE "([0-9])\\.([0-9])(\\.[0-9])?" "\\1"
      _my_COMPILER_BASE_VERSION ${_my_COMPILER_VERSION})
 diff --git a/test/CMakeLists.txt b/test/CMakeLists.txt
-index f1b85b7..aca6952 100644
+index f1b85b7..952eeca 100644
 --- a/test/CMakeLists.txt
 +++ b/test/CMakeLists.txt
-@@ -4,7 +4,7 @@ macro( hepmc_test testname )
+@@ -4,10 +4,15 @@ macro( hepmc_test testname )
  
    message( STATUS "building ${testname} for ${testname}.sh" )
  
 -  find_file( ${testname}_source ${testname}.cc ${CMAKE_CURRENT_SOURCE_DIR}
-+  find_file( ${testname}_source ${testname}.cc PATHS ${CMAKE_CURRENT_SOURCE_DIR}
- ${CMAKE_CURRENT_BINARY_DIR} )
+-${CMAKE_CURRENT_BINARY_DIR} )
++  if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${testname}.cc)
++    set(${testname}_source ${CMAKE_CURRENT_SOURCE_DIR}/${testname}.cc)
++  elseif(EXISTS ${CMAKE_CURRENT_BINARY_DIR}/${testname}.cc)
++    set(${testname}_source ${CMAKE_CURRENT_BINARY_DIR}/${testname}.cc)
++  else()
++    message(FATAL_ERROR "Cannot find source file ${testname}.cc")
++  endif()
    ADD_EXECUTABLE(${testname} ${${testname}_source} ${ARGN} )
-  
-@@ -28,7 +28,7 @@ macro( hepmc_simple_test testname )
+- 
++
+   if( ${CMAKE_SYSTEM_NAME} MATCHES "Windows" )
+     message( STATUS "skipping ${testname}.sh on ${CMAKE_SYSTEM_NAME}")
+   else()
+@@ -28,8 +33,13 @@ macro( hepmc_simple_test testname )
    # include test in search path
    include_directories ("${CMAKE_CURRENT_SOURCE_DIR}")
  
 -  find_file( ${testname}_source ${testname}.cc ${CMAKE_CURRENT_SOURCE_DIR}
-+  find_file( ${testname}_source ${testname}.cc PATHS ${CMAKE_CURRENT_SOURCE_DIR}
- ${CMAKE_CURRENT_BINARY_DIR} )
+-${CMAKE_CURRENT_BINARY_DIR} )
++  if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${testname}.cc)
++    set(${testname}_source ${CMAKE_CURRENT_SOURCE_DIR}/${testname}.cc)
++  elseif(EXISTS ${CMAKE_CURRENT_BINARY_DIR}/${testname}.cc)
++    set(${testname}_source ${CMAKE_CURRENT_BINARY_DIR}/${testname}.cc)
++  else()
++    message(FATAL_ERROR "Cannot find source file ${testname}.cc")
++  endif()
    #message(STATUS "building simple test ${testname} from ${${testname}_source}")
    ADD_EXECUTABLE(${testname} ${${testname}_source} ${ARGN} )
+ 
