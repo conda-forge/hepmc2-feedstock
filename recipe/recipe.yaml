@@ -1,0 +1,69 @@
+schema_version: 1
+
+context:
+  name: hepmc2
+  version: 2.06.11
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://hepmc.web.cern.ch/hepmc/releases/hepmc${{ version }}.tgz
+  sha256: 86b66ea0278f803cde5774de8bd187dd42c870367f1cbf6cdaec8dc7cf6afc10
+  target_directory: source
+  patches:
+    - 0001-Fix-cmake4-compat.patch
+
+build:
+  number: 4
+  skip: win
+  dynamic_linking:
+    overdepending_behavior: error
+    overlinking_behavior: error
+
+requirements:
+  build:
+    - ${{ compiler('c') }}
+    - ${{ compiler('cxx') }}
+    - ${{ stdlib("c") }}
+    - cmake
+    - make
+  run_exports:
+    - ${{ pin_subpackage(name, upper_bound='x.x') }}
+
+tests:
+  - files:
+      source:
+        - source/examples
+    requirements:
+      run:
+        - ${{ compiler('c') }}
+        - ${{ compiler('cxx') }}
+        - ${{ stdlib("c") }}
+    script:
+      - cd source/examples
+      - ${CXX} example_UsingIterators.cc -o example_UsingIterators -I${CONDA_PREFIX}/include -L${CONDA_PREFIX}/lib -lHepMC
+      - ${CXX} example_EventSelection.cc -o example_EventSelection -I${CONDA_PREFIX}/include -L${CONDA_PREFIX}/lib -lHepMC
+      - ${CXX} example_BuildEventFromScratch.cc -o example_BuildEventFromScratch -I${CONDA_PREFIX}/include -L${CONDA_PREFIX}/lib -lHepMC
+
+about:
+  license: LGPL-2.1-or-later
+  license_file: source/INSTALL
+  summary: HepMC - a C++ Event Record for Monte Carlo Generators
+  description: |
+    The HepMC package is an object oriented, C++ event record
+    for High Energy Physics Monte Carlo generators and simulation.
+    The original code was written by M. Dobbs and J.B. Hansen
+    (Comput. Phys. Commun. 134 (2001) 41). Since the first
+    implementation, the package has undergone several modifications
+    and in particular, the latest HepMC3 series is a completely new
+    re-write using currently available C++11 techniques.
+  homepage: https://hepmc.web.cern.ch/hepmc/
+  repository: https://gitlab.cern.ch/hepmc/HepMC
+
+extra:
+  recipe-maintainers:
+    - gartung
+    - chrisburr
+    - henryiii
